@@ -1,0 +1,75 @@
+---
+title: 'Coursera: Practical Machine Learning'
+subtitle: 'Qualitative Activity Recognition of Weight Lifting Exercises'
+author: "Christopher Kevin"
+date: "14/04/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE, fig.width=5, fig.height=4, fig.align='center', fig.pos = 'H', out.extra = '')
+library(caret)
+library(tidyverse)
+doMC::registerDoMC(cores=2)
+```
+
+## Part 1: Explanatory Data Analysis
+
+Load train and test datasets:
+```{r}
+train <- read.csv("/Users/ckevin/Google Drive - Personal/Education/Coursera/01-Practical Machine Learning/R/practical-machine-learning/Data/pml-training.csv")
+test <- read.csv("/Users/ckevin/Google Drive - Personal/Education/Coursera/01-Practical Machine Learning/R/practical-machine-learning/Data/pml-testing.csv")
+```
+
+Understand the structure of the data:
+```{r}
+glimpse(train)
+head(train)
+# Possible classes
+levels(train$classe)
+```
+
+Takeaways:
+
+- The training data consist of 19,622 bservations and 160 variables
+
+- Notice in the structure of the data, there are some variables with missing values, this should be in our consideration when doing the modelling
+
+Deal with missing values:
+```{r}
+omitvars <- grep("avg|max|min|total|var|stddev|skewness|kurtosis|amplitude|timestamp|window",
+     names(train), value = TRUE)
+train_mod <- select(train, !omitvars & !X)
+test_mod <- select(test, !omitvars & !X)
+train_mod[,2:49] <- sapply(train_mod[,2:49], as.numeric)
+test_mod[,2:49] <- sapply(test_mod[,2:49], as.numeric)
+```
+
+
+## Part 2: Model Fitting
+
+USe 5-fold cross-validation to reduce overfitting
+```{r}
+trControl <- trainControl(method = "cv", number = 5, allowParallel = TRUE)
+```
+
+Fit Random Forrest Algorithm to the training data
+```{r}
+modFit <- train(classe~ ., data=train_mod, method="rf", trControl=trControl)
+```
+
+```{r}
+modFit$finalModel
+modFit$resample
+```
+
+OOB estimate of training error rate: 0.47%
+
+## Part 3: Model Prediction
+
+```{r}
+pred <- predict(modFit, test_mod)
+pred
+```
+
