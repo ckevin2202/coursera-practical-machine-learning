@@ -1,17 +1,11 @@
 ---
-<<<<<<< HEAD
-title: 'Coursera: Practical Machine Learning'
-subtitle: 'Qualitative Activity Recognition of Weight Lifting Exercises'
-=======
 title: 'Coursera: Practical Machine Learning Project'
->>>>>>> a9f36dd03a3b5f79b5c4a5b002e1d108397dbcf7
 author: "Christopher Kevin"
 date: "14/04/2020"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-<<<<<<< HEAD
 rm(list=ls())
 knitr::opts_chunk$set(echo = TRUE, fig.width=5, fig.height=4, fig.align='center', fig.pos = 'H', out.extra = '')
 library(caret)
@@ -78,27 +72,3 @@ pred <- predict(modFit, test_mod)
 pred
 ```
 
-=======
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
->>>>>>> a9f36dd03a3b5f79b5c4a5b002e1d108397dbcf7
